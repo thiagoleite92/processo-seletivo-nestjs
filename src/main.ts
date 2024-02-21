@@ -3,6 +3,12 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -16,6 +22,8 @@ async function bootstrap() {
       },
     })
   );
+
+  app.enableCors({ ...corsOptions });
 
   const config = new DocumentBuilder().setTitle('Template Api').setVersion('1.0').addTag('Api').addBearerAuth().build();
 
