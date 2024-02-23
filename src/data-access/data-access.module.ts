@@ -1,10 +1,10 @@
-import { UsersProviders } from './../common/providers/users.providers';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Module } from '@nestjs/common';
+import { ClinicsProviders, UsersProviders } from 'src/common/providers';
 
 @Module({
   imports: [SequelizeModule.forFeature([])],
   exports: [SequelizeModule],
-  providers: [...UsersProviders],
+  providers: [...UsersProviders, ...ClinicsProviders],
 })
 export class DataAccessModule {}
