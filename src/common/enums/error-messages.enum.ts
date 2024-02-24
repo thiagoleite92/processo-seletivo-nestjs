@@ -3,5 +3,6 @@ export enum ErrorMessages {
   COMPANY_NOT_FOUND = 'A empresa não existe.',
   INVALID_PASSWORD = 'A senha atual está incorreta.',
   USER_ALREADY_REGISTERED = 'Usuário já cadastrado.',
+  CNPJ_ALREADY_REGISTERED = 'CNPJ já está cadastrado',
   INVALID_CNPJ_PASSWORD = 'CNPJ e/ou senha incorretos. Tente novamente ou clique em ”Esqueceu a senha?” para redefinir.',
 }

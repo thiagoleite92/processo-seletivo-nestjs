@@ -5,7 +5,7 @@ import { DataAccessModule } from './data-access/data-access.module';
 import { DistributionModule } from './distribution/distribution.module';
 import { BusinessModule } from './business/business.module';
 import { Dialect } from 'sequelize';
-import { Users } from './common/entities';
+import { Clinics, Users } from './common/entities';
 import { LocalStrategy } from './common/auth/local.strategy';
 
 @Module({
@@ -19,7 +19,7 @@ import { LocalStrategy } from './common/auth/local.strategy';
     DataAccessModule,
     DistributionModule,
     SequelizeModule.forRoot({
-      models: [Users],
+      models: [Users, Clinics],
       autoLoadModels: true,
       synchronize: true,
       dialect: process.env.DATABASE_DIALECT as Dialect,

@@ -2,19 +2,56 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface) {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('Addresses', [
+      {
+        cep: '50711180',
+        state: 'pe',
+        city: 'recife',
+        street: 'eliseu cavalcanti',
+        district: 'cordeiro',
+        number: 246,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        cep: '50711181',
+        state: 'pe',
+        city: 'recife',
+        street: 'eliseu magalhaes',
+        district: 'cordeiro',
+        number: 222,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        cep: '50711181',
+        state: 'pe',
+        city: 'recife',
+        street: 'desembargador rodolfo aureliano',
+        district: 'várzea',
+        number: 176,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+
+    const [{ id: id1 }, { id: id2 }, { id: id3 }] = await queryInterface.select(Sequelize.Model.Addresses, 'Addresses', {});
+
     return queryInterface.bulkInsert('Clinics', [
       {
         name: 'clnica 1',
         cnpj: '71282422000145',
         createdAt: new Date(),
         updatedAt: new Date(),
+        addressId: id1,
       },
       {
         name: 'clnica 1',
         cnpj: '95018551000199',
         createdAt: new Date(),
         updatedAt: new Date(),
+        addressId: id2,
       },
       {
         name: 'clnica 1',
@@ -22,11 +59,14 @@ module.exports = {
         website: 'www.clinica3.com.br',
         createdAt: new Date(),
         updatedAt: new Date(),
+        addressId: id3,
       },
     ]);
   },
 
-  down: (queryInterface) => {
-    return queryInterface.bulkDelete('Clinics', null, {});
+  down: async (queryInterface) => {
+    await queryInterface.bulkDelete('Clinics', null, {});
+
+    return queryInterface.bulkDelete('Addresses', null, {});
   },
 };

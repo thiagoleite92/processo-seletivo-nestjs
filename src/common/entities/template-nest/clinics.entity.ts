@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsTo } from 'sequelize-typescript';
+import { Addresses } from './addresses.entity';
 
 @Table({
   timestamps: true,
@@ -24,4 +25,7 @@ export class Clinics extends Model<Clinics> {
     allowNull: true,
   })
   website: string;
+
+  @BelongsTo(() => Addresses, { onDelete: 'SET NULL', foreignKey: 'id' })
+  addressId: Addresses;
 }
