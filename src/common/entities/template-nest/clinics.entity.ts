@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Addresses } from './addresses.entity';
 
 @Table({
@@ -26,6 +26,7 @@ export class Clinics extends Model<Clinics> {
   })
   website: string;
 
+  @ForeignKey(() => Addresses)
   @BelongsTo(() => Addresses, { onDelete: 'SET NULL', foreignKey: 'id' })
-  addressId: Addresses;
+  addressId: number;
 }

@@ -3,12 +3,14 @@ import { Op } from 'sequelize';
 import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
 import { Clinics } from 'src/common/entities';
 import { ErrorMessages } from 'src/common/enums/error-messages.enum';
+import { AddressesService } from './addresses.service';
 
 @Injectable()
 export class ClinicsService {
   constructor(
     @Inject('CLINICS_REPOSITORY')
-    private clinicsRepository: typeof Clinics
+    private clinicsRepository: typeof Clinics,
+    private readonly addressesService: AddressesService
   ) {}
 
   async list() {
@@ -38,11 +40,14 @@ export class ClinicsService {
     }
   }
 
-  async createClinic({ cnpj, name, website }: CreateClinicDto) {
+  async createClinic({ cnpj, name, website, address }: CreateClinicDto) {
+    const { id: addressId } = await this.addressesService.createAddress(address);
+
     await this.clinicsRepository.create<Clinics>({
       cnpj,
       name,
       website,
+      addressId,
     });
   }
 }
