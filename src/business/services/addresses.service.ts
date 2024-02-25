@@ -20,4 +20,26 @@ export class AddressesService {
     });
     return address;
   }
+
+  async updateAddress(addressId: number, { cep, city, district, number, state, street }: AddressDto) {
+    const address = await this.findAddress(addressId);
+
+    if (address) {
+      address.city = city;
+      address.cep = cep;
+      address.district = district;
+      address.number = String(number);
+      address.state = state;
+      address.street = street;
+
+      await address.save();
+      return address;
+    }
+
+    return await this.createAddress({ cep, city, district, number, state, street });
+  }
+
+  async findAddress(addressId: number) {
+    return await this.addressesRepository.findByPk(addressId);
+  }
 }

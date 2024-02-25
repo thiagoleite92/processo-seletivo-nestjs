@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ClinicsService } from 'src/business/services/clinics.service';
 import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
 
@@ -9,7 +9,7 @@ export class ClinicController {
   @Post()
   @HttpCode(201)
   create(@Body() createClinicDto: CreateClinicDto) {
-    return this.clinicsService.createClinic(createClinicDto);
+    return this.clinicsService.create(createClinicDto);
   }
 
   @Get()
@@ -17,9 +17,11 @@ export class ClinicController {
     return this.clinicsService.list();
   }
 
-  @Put()
-  update() {
-    // sua implementação
+  @Put(':id')
+  update(@Param() clinicId: { id: string }, @Body() updateClinicDto: CreateClinicDto) {
+    const { id } = clinicId;
+
+    return this.clinicsService.updateClinic(Number(id), updateClinicDto);
   }
 
   @Delete()

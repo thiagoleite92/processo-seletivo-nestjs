@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
 import { Clinics } from 'src/common/entities';
@@ -32,6 +32,16 @@ export class ClinicsService {
     return clinic;
   }
 
+  async findClinicById(clinicId: number) {
+    const clinic = await this.clinicsRepository.findByPk(clinicId);
+
+    if (!clinic) {
+      throw new BadRequestException(null, ErrorMessages.COMPANY_NOT_FOUND);
+    }
+
+    return clinic;
+  }
+
   async clinicAlreadyRegistered(cnpj: string) {
     const clinic = await this.clinicExists(cnpj);
 
@@ -49,5 +59,24 @@ export class ClinicsService {
       website,
       addressId,
     });
+  }
+
+  async updateClinic(clinicId: number, { cnpj, name, website, address }: CreateClinicDto) {
+    const clinic = await this.findClinicById(clinicId);
+
+    if (cnpj !== clinic?.cnpj) {
+      await this.clinicAlreadyRegistered(cnpj);
+    }
+
+    const { id: addressId } = await this.addressesService.updateAddress(clinic?.addressId, address);
+
+    clinic.name = name;
+    clinic.cnpj = cnpj;
+    clinic.website = website;
+    clinic.addressId = addressId;
+
+    await clinic.save();
+
+    return clinic;
   }
 }
