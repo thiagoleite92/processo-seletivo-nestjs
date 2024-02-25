@@ -40,6 +40,10 @@ export class AddressesService {
   }
 
   async findAddress(addressId: number) {
-    return await this.addressesRepository.findByPk(addressId);
+    return await this.addressesRepository.findByPk<Addresses>(addressId);
+  }
+
+  async delete(addressId: number) {
+    await this.addressesRepository.destroy<Addresses>({ where: { id: addressId } });
   }
 }

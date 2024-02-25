@@ -21,11 +21,13 @@ export class ClinicController {
   update(@Param() clinicId: { id: string }, @Body() updateClinicDto: CreateClinicDto) {
     const { id } = clinicId;
 
-    return this.clinicsService.updateClinic(Number(id), updateClinicDto);
+    return this.clinicsService.update(Number(id), updateClinicDto);
   }
 
-  @Delete()
-  delete() {
-    // sua implementação
+  @Delete(':id')
+  delete(@Param() clinicId: { id: string }) {
+    const { id } = clinicId;
+
+    return this.clinicsService.delete(Number(id));
   }
 }

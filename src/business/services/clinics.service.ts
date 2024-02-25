@@ -61,7 +61,7 @@ export class ClinicsService {
     });
   }
 
-  async updateClinic(clinicId: number, { cnpj, name, website, address }: CreateClinicDto) {
+  async update(clinicId: number, { cnpj, name, website, address }: CreateClinicDto) {
     const clinic = await this.findClinicById(clinicId);
 
     if (cnpj !== clinic?.cnpj) {
@@ -78,5 +78,15 @@ export class ClinicsService {
     await clinic.save();
 
     return clinic;
+  }
+
+  async delete(clinicId: number) {
+    const clinic = await this.findClinicById(clinicId);
+
+    await this.clinicsRepository.destroy({
+      where: { id: clinicId },
+    });
+
+    await this.addressesService.delete(clinic?.addressId);
   }
 }
