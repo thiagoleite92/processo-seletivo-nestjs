@@ -6,10 +6,10 @@ module.exports = {
     await queryInterface.bulkInsert('Addresses', [
       {
         cep: '50711180',
-        state: 'pe',
+        uf: 'pe',
         city: 'recife',
         street: 'eliseu cavalcanti',
-        district: 'cordeiro',
+        neighborhood: 'cordeiro',
 
         number: 246,
         createdAt: new Date(),
@@ -17,10 +17,10 @@ module.exports = {
       },
       {
         cep: '50711181',
-        state: 'pe',
+        uf: 'pe',
         city: 'recife',
         street: 'eliseu magalhaes',
-        district: 'cordeiro',
+        neighborhood: 'cordeiro',
         number: 222,
 
         createdAt: new Date(),
@@ -28,10 +28,10 @@ module.exports = {
       },
       {
         cep: '50711181',
-        state: 'pe',
+        uf: 'pe',
         city: 'recife',
         street: 'desembargador rodolfo aureliano',
-        district: 'várzea',
+        neighborhood: 'várzea',
         number: 176,
 
         createdAt: new Date(),
@@ -63,7 +63,6 @@ module.exports = {
       {
         name: 'clnica 1',
         cnpj: '85591699000164',
-        website: 'www.clinica3.com.br',
         phone: '891274679',
         ownerName: 'Alberico Leite',
         createdAt: new Date(),

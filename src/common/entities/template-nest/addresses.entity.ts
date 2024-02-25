@@ -17,7 +17,7 @@ export class Addresses extends Model<Addresses> {
     type: DataType.STRING,
     allowNull: false,
   })
-  state: string;
+  uf: string;
 
   @Column({
     type: DataType.STRING,
@@ -35,7 +35,7 @@ export class Addresses extends Model<Addresses> {
     type: DataType.STRING,
     allowNull: false,
   })
-  district: string;
+  neighborhood: string;
 
   @Column({
     type: DataType.STRING,

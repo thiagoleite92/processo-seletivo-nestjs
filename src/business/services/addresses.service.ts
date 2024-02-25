@@ -9,34 +9,34 @@ export class AddressesService {
     private addressesRepository: typeof Addresses
   ) {}
 
-  async createAddress({ cep, city, district, number, state, street }: AddressDto) {
+  async createAddress({ cep, city, neighborhood, number, uf, street }: AddressDto) {
     const address = await this.addressesRepository.create<Addresses>({
       cep,
       city,
-      district,
+      neighborhood,
       number: String(number),
-      state,
+      uf,
       street,
     });
     return address;
   }
 
-  async updateAddress(addressId: number, { cep, city, district, number, state, street }: AddressDto) {
+  async updateAddress(addressId: number, { cep, city, neighborhood, number, uf, street }: AddressDto) {
     const address = await this.findAddress(addressId);
 
     if (address) {
       address.city = city;
       address.cep = cep;
-      address.district = district;
+      address.neighborhood = neighborhood;
       address.number = String(number);
-      address.state = state;
+      address.uf = uf;
       address.street = street;
 
       await address.save();
       return address;
     }
 
-    return await this.createAddress({ cep, city, district, number, state, street });
+    return await this.createAddress({ cep, city, neighborhood, number, uf, street });
   }
 
   async findAddress(addressId: number) {

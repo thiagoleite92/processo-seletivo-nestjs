@@ -17,7 +17,7 @@ export class AddressDto {
   @IsString()
   @IsNotEmpty()
   @Validate(ValidaUF, { message: 'Insira uma sigla válida.' })
-  state: string;
+  uf: string;
 
   @IsString()
   @MaxLength(50)
@@ -33,5 +33,5 @@ export class AddressDto {
   @MaxLength(50)
   @MinLength(3)
   @IsNotEmpty()
-  district: string;
+  neighborhood: string;
 }
