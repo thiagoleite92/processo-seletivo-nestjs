@@ -24,7 +24,13 @@ export class Clinics extends Model<Clinics> {
     type: DataType.STRING,
     allowNull: true,
   })
-  website: string;
+  ownerName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  phone: string;
 
   @ForeignKey(() => Addresses)
   @BelongsTo(() => Addresses, { onDelete: 'SET NULL', foreignKey: 'id' })

@@ -10,6 +10,7 @@ module.exports = {
         city: 'recife',
         street: 'eliseu cavalcanti',
         district: 'cordeiro',
+
         number: 246,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -21,6 +22,7 @@ module.exports = {
         street: 'eliseu magalhaes',
         district: 'cordeiro',
         number: 222,
+
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -31,6 +33,7 @@ module.exports = {
         street: 'desembargador rodolfo aureliano',
         district: 'várzea',
         number: 176,
+
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -42,6 +45,8 @@ module.exports = {
       {
         name: 'clnica 1',
         cnpj: '71282422000145',
+        phone: '34545151',
+        ownerName: 'Thiago Leite',
         createdAt: new Date(),
         updatedAt: new Date(),
         addressId: id1,
@@ -49,6 +54,8 @@ module.exports = {
       {
         name: 'clnica 1',
         cnpj: '95018551000199',
+        phone: '81983643305',
+        ownerName: 'Jonas MAscarenhas',
         createdAt: new Date(),
         updatedAt: new Date(),
         addressId: id2,
@@ -57,6 +64,8 @@ module.exports = {
         name: 'clnica 1',
         cnpj: '85591699000164',
         website: 'www.clinica3.com.br',
+        phone: '891274679',
+        ownerName: 'Alberico Leite',
         createdAt: new Date(),
         updatedAt: new Date(),
         addressId: id3,

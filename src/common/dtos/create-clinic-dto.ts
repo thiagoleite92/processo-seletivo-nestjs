@@ -1,5 +1,5 @@
 import { Transform, Type } from 'class-transformer';
-import { IsEmail, IsOptional, IsString, MinLength, ValidateNested } from 'class-validator';
+import { IsString, MinLength, ValidateNested } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsValidCnpj } from '../validators/cnpj.validator';
 import { AddressDto } from './address-dto';
@@ -16,9 +16,12 @@ export class CreateClinicDto {
   name: string;
 
   @ApiProperty()
-  @IsEmail()
-  @IsOptional()
-  website: string;
+  @IsString()
+  phone: string;
+
+  @ApiProperty()
+  @IsString()
+  ownerName: string;
 
   @ValidateNested({ each: true, message: 'O endereço precisa ter: cep, estado, cidade, bairro e rua, número é opcional' })
   @Type(() => AddressDto)
