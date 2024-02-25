@@ -33,6 +33,8 @@ export class Clinics extends Model<Clinics> {
   phone: string;
 
   @ForeignKey(() => Addresses)
-  @BelongsTo(() => Addresses, { onDelete: 'SET NULL', foreignKey: 'id' })
   addressId: number;
+
+  @BelongsTo(() => Addresses, { onDelete: 'none', foreignKey: 'addressId', as: 'address' })
+  address: Addresses;
 }

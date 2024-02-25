@@ -1,7 +1,7 @@
 import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
-import { Clinics } from 'src/common/entities';
+import { Addresses, Clinics } from 'src/common/entities';
 import { ErrorMessages } from 'src/common/enums/error-messages.enum';
 import { AddressesService } from './addresses.service';
 
@@ -14,7 +14,7 @@ export class ClinicsService {
   ) {}
 
   async list() {
-    return this.clinicsRepository.findAll();
+    return this.clinicsRepository.findAll({ include: { model: Addresses, as: 'address' } });
   }
 
   async create(createClinicDto: CreateClinicDto) {
