@@ -18,7 +18,7 @@ export class ClinicsService {
   }
 
   async create(createClinicDto: CreateClinicDto) {
-    await this.clinicAlreadyRegistered(createClinicDto.cnpj);
+    await this.cnpjAlreadyRegistered(createClinicDto.cnpj);
     await this.createClinic(createClinicDto);
   }
 
@@ -33,7 +33,7 @@ export class ClinicsService {
   }
 
   async findClinicById(clinicId: number) {
-    const clinic = await this.clinicsRepository.findByPk(clinicId);
+    const clinic = await this.clinicsRepository.findByPk(clinicId, { include: { model: Addresses, as: 'address' } });
 
     if (!clinic) {
       throw new BadRequestException(null, ErrorMessages.COMPANY_NOT_FOUND);
@@ -42,7 +42,7 @@ export class ClinicsService {
     return clinic;
   }
 
-  async clinicAlreadyRegistered(cnpj: string) {
+  async cnpjAlreadyRegistered(cnpj: string) {
     const clinic = await this.clinicExists(cnpj);
 
     if (clinic) {
@@ -66,7 +66,7 @@ export class ClinicsService {
     const clinic = await this.findClinicById(clinicId);
 
     if (cnpj !== clinic?.cnpj) {
-      await this.clinicAlreadyRegistered(cnpj);
+      await this.cnpjAlreadyRegistered(cnpj);
     }
 
     const { id: addressId } = await this.addressesService.updateAddress(clinic?.addressId, address);

@@ -17,6 +17,13 @@ export class ClinicController {
     return this.clinicsService.list();
   }
 
+  @Get(':id')
+  getClinicById(@Param() clinicId: { id: string }) {
+    const { id } = clinicId;
+
+    return this.clinicsService.findClinicById(Number(id));
+  }
+
   @Put(':id')
   update(@Param() clinicId: { id: string }, @Body() updateClinicDto: CreateClinicDto) {
     const { id } = clinicId;
