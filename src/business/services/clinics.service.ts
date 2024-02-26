@@ -4,6 +4,7 @@ import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
 import { Addresses, Clinics } from 'src/common/entities';
 import { ErrorMessages } from 'src/common/enums/error-messages.enum';
 import { AddressesService } from './addresses.service';
+import { BaseFilterDTO } from 'src/common/dtos/base-filter-dto';
 
 @Injectable()
 export class ClinicsService {
@@ -13,8 +14,25 @@ export class ClinicsService {
     private readonly addressesService: AddressesService
   ) {}
 
-  async list() {
-    return this.clinicsRepository.findAll({ include: { model: Addresses, as: 'address' } });
+  async list({ page, search, perPage }: BaseFilterDTO) {
+    return this.clinicsRepository.findAll({
+      include: { model: Addresses, as: 'address' },
+      where: {
+        [Op.or]: {
+          name: {
+            [Op.iLike]: `%${search}%`,
+          },
+          cnpj: {
+            [Op.iLike]: `%${search}%`,
+          },
+          ownerName: {
+            [Op.iLike]: `%${search}%`,
+          },
+        },
+      },
+      limit: Number(perPage),
+      offset: (Number(page) - 1) * 10,
+    });
   }
 
   async create(createClinicDto: CreateClinicDto) {

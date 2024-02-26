@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { ClinicsService } from 'src/business/services/clinics.service';
+import { BaseFilterDTO } from 'src/common/dtos/base-filter-dto';
 import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
 
 @Controller('/clinic')
@@ -13,8 +14,9 @@ export class ClinicController {
   }
 
   @Get()
-  list() {
-    return this.clinicsService.list();
+  list(@Query() filter: BaseFilterDTO) {
+    console.log(filter);
+    return this.clinicsService.list(filter);
   }
 
   @Get(':id')
