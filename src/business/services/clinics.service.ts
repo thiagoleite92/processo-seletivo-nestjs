@@ -15,8 +15,11 @@ export class ClinicsService {
   ) {}
 
   async list({ page, search, perPage }: BaseFilterDTO) {
-    return this.clinicsRepository.findAll({
+    const totalItems = await this.clinicsRepository.count();
+
+    const { count, rows } = await this.clinicsRepository.findAndCountAll({
       include: { model: Addresses, as: 'address' },
+
       where: {
         [Op.or]: {
           name: {
@@ -31,8 +34,21 @@ export class ClinicsService {
         },
       },
       limit: Number(perPage),
-      offset: (Number(page) - 1) * 10,
+      offset: (Number(page) - 1) * Number(perPage),
     });
+
+    const totalPages = Math.ceil(count / Number(perPage));
+
+    const nextPage = Number(page) < totalPages;
+
+    return {
+      data: rows,
+      currentPage: Number(page),
+      nextPage,
+      count: rows?.length,
+      totalPages,
+      totalItems,
+    };
   }
 
   async create(createClinicDto: CreateClinicDto) {
