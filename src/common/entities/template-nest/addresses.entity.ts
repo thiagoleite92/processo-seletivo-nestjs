@@ -39,9 +39,15 @@ export class Addresses extends Model<Addresses> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   number: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  complement: string;
 
   @HasOne(() => Clinics)
   clinics: Clinics[];

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AddressDto } from 'src/common/dtos/address-dto';
+import { CreateAddressDTO } from 'src/common/dtos/create-address-dto';
 import { Addresses } from 'src/common/entities';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class AddressesService {
     private addressesRepository: typeof Addresses
   ) {}
 
-  async createAddress({ cep, city, neighborhood, number, uf, street }: AddressDto) {
+  async createAddress({ cep, city, neighborhood, number, uf, street, complement }: CreateAddressDTO) {
     const address = await this.addressesRepository.create<Addresses>({
       cep,
       city,
@@ -17,11 +17,12 @@ export class AddressesService {
       number: String(number),
       uf,
       street,
+      complement,
     });
     return address;
   }
 
-  async updateAddress(addressId: number, { cep, city, neighborhood, number, uf, street }: AddressDto) {
+  async updateAddress(addressId: number, { cep, city, neighborhood, number, uf, street, complement }: CreateAddressDTO) {
     const address = await this.findAddress(addressId);
 
     if (address) {
@@ -31,12 +32,13 @@ export class AddressesService {
       address.number = String(number);
       address.uf = uf;
       address.street = street;
+      address.complement = complement;
 
       await address.save();
       return address;
     }
 
-    return await this.createAddress({ cep, city, neighborhood, number, uf, street });
+    return await this.createAddress({ cep, city, neighborhood, number, uf, street, complement });
   }
 
   async findAddress(addressId: number) {

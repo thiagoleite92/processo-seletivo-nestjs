@@ -1,10 +1,10 @@
 import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { CreateClinicDto } from 'src/common/dtos/create-clinic-dto';
-import { Addresses, Clinics } from 'src/common/entities';
-import { ErrorMessages } from 'src/common/enums/error-messages.enum';
+import { CreateClinicDto } from '../../common/dtos/create-clinic-dto';
+import { Addresses, Clinics } from '../../common/entities';
+import { ErrorMessages } from '../../common/enums/error-messages.enum';
 import { AddressesService } from './addresses.service';
-import { BaseFilterDTO } from 'src/common/dtos/base-filter-dto';
+import { BaseFilterDTO } from '../../common/dtos/base-filter-dto';
 
 @Injectable()
 export class ClinicsService {
